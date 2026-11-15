@@ -25,10 +25,12 @@
   </form>
 
   <p id="form-message" role="status" aria-live="polite"></p>
+  <iframe id="payment-frame" title="Payment page" width="100%" height="600" hidden></iframe>
 
   <script>
     const form = document.getElementById('customer-form');
     const message = document.getElementById('form-message');
+    const paymentFrame = document.getElementById('payment-frame');
     const submitButton = form.querySelector('button[type="submit"]');
 
     form.addEventListener('submit', async (event) => {
@@ -50,7 +52,9 @@
         }
 
         message.textContent = result.message;
-        form.reset();
+        form.hidden = true;
+        paymentFrame.src = result.payment_url;
+        paymentFrame.hidden = false;
       } catch {
         message.textContent = 'Could not contact the server.';
       } finally {

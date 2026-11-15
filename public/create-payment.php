@@ -54,7 +54,6 @@ curl_setopt_array($curl, [
 
 $response = curl_exec($curl);
 $status = (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-curl_close($curl);
 
 $gatewayResponse = json_decode($response ?: '', true);
 if ($response === false || $status < 200 || $status >= 300 ||
@@ -72,7 +71,7 @@ if ($response === false || $status < 200 || $status >= 300 ||
 
 $gatewayPayment = $gatewayResponse['data']['payment'] ?? [];
 $gatewayPaymentId = $gatewayPayment['id'] ?? '';
-$paymentUrl = $gatewayPayment['url'] ?? '';
+$paymentUrl = $gatewayPayment['link'] ?? '';
 
 if ($gatewayPaymentId === '' || $paymentUrl === '') {
     http_response_code(502);

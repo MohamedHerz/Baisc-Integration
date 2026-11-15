@@ -1,1 +1,0 @@
-ALTER TABLE customers MODIFY name VARCHAR(64) NOT NULL;
