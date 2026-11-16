@@ -17,8 +17,8 @@ if (!is_string($id) || !ctype_digit($id) || (int) $id < 1) {
 }
 
 $paymentQuery = $pdo->prepare(
-    'SELECT p.gateway_payment_id, p.amount, p.currency,
-            p.status, p.created_at, c.name, c.email, c.mobile
+    'SELECT p.amount, p.currency, p.status, p.created_at,
+            c.name, c.email, c.mobile
      FROM payments p
      JOIN customers c ON c.id = p.customer_id
      WHERE p.id = ?

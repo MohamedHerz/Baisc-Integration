@@ -39,6 +39,8 @@ const detailsMessage = document.getElementById('details-message');
 function addDetail(label, value) {
   const term = document.createElement('dt');
   const description = document.createElement('dd');
+  term.className = 'col-sm-5 fw-semibold';
+  description.className = 'col-sm-7';
   term.textContent = label;
   description.textContent = value ?? '—';
   paymentDetails.append(term, description);
@@ -68,7 +70,6 @@ document.querySelectorAll('.view-payment').forEach((button) => {
         Customer: payment.name,
         Email: payment.email,
         Mobile: payment.mobile,
-        'Gate-E payment ID': payment.gateway_payment_id,
         Amount: `${payment.amount} ${payment.currency}`,
         Status: payment.status,
         'Payment created': payment.created_at
@@ -77,12 +78,8 @@ document.querySelectorAll('.view-payment').forEach((button) => {
       if (result.transactions.length === 0) {
         addDetail('Transactions', 'None recorded');
       } else {
-        result.transactions.forEach((transaction, i) => {
-          Object.entries({
-            ID: transaction.gateway_transaction_id
-          }).forEach(([label, value]) => {
-            addDetail(`Transaction ${i + 1} ${label}`, value);
-          });
+        result.transactions.forEach((transaction) => {
+          addDetail('Transaction ID', transaction.gateway_transaction_id);
         });
       }
     } catch {

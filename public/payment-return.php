@@ -26,13 +26,20 @@ $status = htmlspecialchars($payment['status'], ENT_QUOTES, 'UTF-8');
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Payment result</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-yEPZ7jP9S0QKiUQ0m3jjsO4ProIW7wvR9gXkI7JOGa2XVsw53Yke2bsdkBbjmmiX" crossorigin="anonymous">
 </head>
 <body>
-  <h1>Payment result</h1>
-  <p>Payment status: <?= $status ?></p>
-  <?php if ($payment['status'] === 'initiated'): ?>
-    <p>Waiting for the payment confirmation.</p>
-  <?php endif; ?>
-  <p><a href="index.php" target="_top">Back to payments</a></p>
+  <main class="container py-5">
+    <div class="card border-0 shadow-sm mx-auto" style="max-width: 32rem;">
+      <div class="card-body p-4">
+        <h1 class="h3 mb-3">Payment result</h1>
+        <p class="fs-5">Payment status: <strong><?= $status ?></strong></p>
+        <?php if ($payment['status'] === 'initiated'): ?>
+          <p class="alert alert-info">Waiting for the payment confirmation.</p>
+        <?php endif; ?>
+        <a class="btn btn-primary" href="index.php" target="_top">Back to payments</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>

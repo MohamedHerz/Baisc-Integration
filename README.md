@@ -46,3 +46,6 @@ DB schema:
 - One customer can have many payments. Each payment belongs to one customer through `payments.customer_id`.
 - One payment can have zero or many transactions. Each transaction belongs to one payment through `transactions.payment_id`.
 
+### Styling
+
+The pages use Bootstrap 5.3 from jsDelivr, so an internet connection is needed to load the styles.
