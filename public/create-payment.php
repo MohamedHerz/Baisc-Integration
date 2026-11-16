@@ -15,6 +15,7 @@ $mobile = $_POST['mobile'] ?? '';
 $referenceCode = 'ORDER_' . bin2hex(random_bytes(16));
 $amount = 50;
 $currency = 'BHD';
+$publicBaseUrl = rtrim($settings['PUBLIC_BASE_URL'], '/');
 
 $customer = $pdo->prepare('INSERT INTO customers (name, email, mobile) VALUES (?, ?, ?)');
 $customer->execute([$name, $email, $mobile]);
@@ -38,6 +39,10 @@ $requestBody = json_encode([
             'name' => $name,
             'email' => $email,
             'mobile' => $mobile,
+        ],
+        'settings' => [
+            'callback_url' => $publicBaseUrl . '/callback.php',
+            'redirect_url' => $publicBaseUrl . '/payment-return.php?reference_code=' . rawurlencode($referenceCode),
         ],
     ],
 ]);
@@ -81,9 +86,8 @@ if ($gatewayPaymentId === '' || $paymentUrl === '') {
 
 $payment = $pdo->prepare(
     "INSERT INTO payments (
-        customer_id, reference_code, gateway_payment_id, amount, currency, status,
-        gateway_status_code, gateway_status_message, hosted_payment_url
-     ) VALUES (?, ?, ?, ?, ?, 'initiated', ?, ?, ?)"
+        customer_id, reference_code, gateway_payment_id, amount, currency, status
+     ) VALUES (?, ?, ?, ?, ?, 'initiated')"
 );
 $payment->execute([
     $customerId,
@@ -91,9 +95,6 @@ $payment->execute([
     $gatewayPaymentId,
     $amount,
     $currency,
-    $gatewayResponse['status_code'] ?? null,
-    $gatewayResponse['message'] ?? null,
-    $paymentUrl,
 ]);
 
 echo json_encode([

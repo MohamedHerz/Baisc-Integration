@@ -22,7 +22,10 @@ DB schema:
 | FK  customer_id  |
 |     reference    |
 |     gateway ID   |
-|     amount/status|
+|     amount       |
+|     currency     |
+|     status       |
+|     created at   |
 +------------------+
         1
         |
@@ -35,7 +38,6 @@ DB schema:
 | FK  payment_id   |
 |     gateway ID   |
 |     status       |
-|     auth code/RRN|
 +------------------+
 ```
 
@@ -43,3 +45,4 @@ DB schema:
 
 - One customer can have many payments. Each payment belongs to one customer through `payments.customer_id`.
 - One payment can have zero or many transactions. Each transaction belongs to one payment through `transactions.payment_id`.
+
